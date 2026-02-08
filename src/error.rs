@@ -5,7 +5,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error(transparent)]
-    ScreenLockError(#[from] nosleep::Error),
+    NoSleep(#[from] nosleep::Error),
 }
 
 impl Serialize for Error {

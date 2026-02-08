@@ -1,20 +1,19 @@
 [package]
 name = "tauri-plugin-nosleep"
-metadata = "tauri-plugin"
-version = "2.0.0-beta.1"
-authors = [ "Peter Evers <pevers90@gmail.com>" ]
+version = "2.0.0"
+authors = ["Peter Evers <pevers90@gmail.com>"]
 license = "MIT"
 description = "Tauri plugin to prevent the power save functionality in the OS"
 edition = "2021"
-rust-version = "1.70"
+rust-version = "1.77.2"
 exclude = ["/examples", "/webview-dist", "/webview-src", "/node_modules"]
 links = "tauri-plugin-nosleep"
 
 [dependencies]
-tauri = { version = "2.0.0-beta.5" }
-serde = "1.0"
-thiserror = "1.0"
-nosleep = { version = "0.2.1", features = ["serde"] }
+tauri = "2"
+serde = "1"
+thiserror = "2"
+nosleep = { version = "0.2", features = ["serde"] }
 
 [build-dependencies]
-tauri-plugin = { version = "2.0.0-beta.3", features = ["build"] }
+tauri-plugin = { version = "2", features = ["build"] }

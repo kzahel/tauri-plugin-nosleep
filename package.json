@@ -1,26 +1,23 @@
 {
   "name": "tauri-plugin-nosleep-api",
-  "version": "0.1.1",
+  "version": "2.0.0",
   "author": "Peter Evers <pevers90@gmail.com>",
-  "description": "Tauri plugin to block the power save functionality in the OS",
-  "browser": "webview-dist/index.js",
-  "main": "webview-dist/index.js",
-  "types": "webview-dist/index.d.ts",
-  "keywords": ["tauri-plugin-nosleep", "caffeine", "nosleep"],
+  "license": "MIT",
+  "description": "Tauri plugin to prevent the power save functionality in the OS",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md", "LICENSE"],
+  "keywords": ["tauri-plugin", "nosleep", "powersave", "caffeine", "keep-awake"],
   "scripts": {
-    "build": "rollup -c ./webview-src/rollup.config.js",
-    "prepublishOnly": "yarn build",
-    "pretest": "yarn build"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@tauri-apps/api": "^2.0.0"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "13.3.0",
-    "@rollup/plugin-typescript": "8.3.3",
-    "@rollup/plugin-terser": "0.4.4",
-    "rollup": "2.75.6",
-    "typescript": "4.7.3"
-  },
-  "dependencies": {
-    "@tauri-apps/api": "^2.0.0-alpha.11",
-    "tslib": "^2.1.0"
+    "@tauri-apps/api": "^2.0.0",
+    "typescript": "^5.0.0"
   }
 }

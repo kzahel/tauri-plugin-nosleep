@@ -1,47 +1,24 @@
 use nosleep::NoSleep;
+use std::sync::Mutex;
 use tauri::{
     plugin::{Builder, TauriPlugin},
     Manager, Runtime,
 };
-
-use std::sync::Mutex;
-
-#[cfg(desktop)]
-mod desktop;
 
 mod commands;
 mod error;
 
 pub use error::{Error, Result};
 
-#[cfg(desktop)]
-use desktop::Nosleep;
-
-struct NoSleepState {
-    no_sleep: Mutex<NoSleep>,
-}
-
-/// Extensions to [`tauri::App`], [`tauri::AppHandle`] and [`tauri::Window`] to access the nosleep APIs.
-pub trait NosleepExt<R: Runtime> {
-    fn nosleep(&self) -> &Nosleep<R>;
-}
-
-impl<R: Runtime, T: Manager<R>> crate::NosleepExt<R> for T {
-    fn nosleep(&self) -> &Nosleep<R> {
-        self.state::<Nosleep<R>>().inner()
-    }
+pub(crate) struct NoSleepState {
+    pub(crate) no_sleep: Mutex<NoSleep>,
 }
 
 /// Initializes the plugin.
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("nosleep")
         .invoke_handler(tauri::generate_handler![commands::block, commands::unblock])
-        .setup(|app, api| {
-            #[cfg(desktop)]
-            let nosleep = desktop::init(app, api)?;
-            app.manage(nosleep);
-
-            // manage state so it is accessible by the commands
+        .setup(|app, _api| {
             app.manage(NoSleepState {
                 no_sleep: Mutex::new(NoSleep::new()?),
             });

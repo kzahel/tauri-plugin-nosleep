@@ -1,12 +1,10 @@
 use nosleep::NoSleepType;
-use tauri::{command, AppHandle, Runtime, State, Window};
+use tauri::{command, State};
 
 use crate::{NoSleepState, Result};
 
 #[command]
-pub(crate) async fn block<R: Runtime>(
-    _app: AppHandle<R>,
-    _window: Window<R>,
+pub(crate) async fn block(
     state: State<'_, NoSleepState>,
     no_sleep_type: NoSleepType,
 ) -> Result<()> {
@@ -15,11 +13,7 @@ pub(crate) async fn block<R: Runtime>(
 }
 
 #[command]
-pub(crate) async fn unblock<R: Runtime>(
-    _app: AppHandle<R>,
-    _window: Window<R>,
-    state: State<'_, NoSleepState>,
-) -> Result<()> {
+pub(crate) async fn unblock(state: State<'_, NoSleepState>) -> Result<()> {
     state.no_sleep.lock().unwrap().stop()?;
     Ok(())
 }
